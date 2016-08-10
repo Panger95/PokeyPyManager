@@ -1,15 +1,15 @@
-PokeyPySnipe
+PokeyPy Manager
 ============
 
-PokeyPySnipe is a tool which allows you to capture Pokemon at specific coordinates without being soft banned. It works by teleporting to the location of the pokemon, engaging it, teleporting back to your starting position, and then capturing it.
+PokeyPy Manager is a tool which allows you to manage your Pokemon in Pokemon Go. It utilizes https://github.com/rubenvereecken/pokemongo-api to gather information and to perform management actions
+such as releasing/evolving/renaming Pokemon.
 
 Features
 --------
 
-- Snipe Pokemon at specific coordinates
-- Only capture Pokemon above a certain CP
-- See stats for your trainer, including capture rate and distance walked
 - View all your Pokemon, including their IVs and CP level
+- Rename Pokemon to include IV in name
+- See stats for your trainer, including capture rate and distance walked
 - Batch release and evolve Pokemon
 
 Requirements
@@ -26,7 +26,7 @@ Instructions
 - Run ```pip install -r requirements.txt```
 - Navigate to the ```pogo``` directory
 - Duplicate ```config.ini.example``` and rename it to ```config.ini```, edit it with your options
-- Run ```python snipe.py```
+- Run ```python mgr.py```
 - Open http://127.0.0.1:5100 in your browser
 
 Troubleshooting
