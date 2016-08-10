@@ -247,7 +247,7 @@ if __name__ == '__main__':
     #config.get('AUTH','username')
     #config.get('AUTH','password')
     #config.get('CONFIG','startLoc')
-    #config.get('CONFIG','minCP')
+    
     
     # Check service
     minCP = int(config.get('CONFIG','minCP'))
