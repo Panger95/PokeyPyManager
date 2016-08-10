@@ -1,0 +1,402 @@
+<html>
+
+<head>
+    <title>Pokey Manager</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <script type=text/javascript>
+        function updateStatus() {
+            document.getElementById('status').innerHTML = ('<center><font size=4 color=Orange><b>Attempting to snipe Pokemon. This may take some time.</center></font></b>');
+        }
+        // attach handlers once iframe is loaded
+    </script>
+
+    <style>
+    input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type=submit],input[type=button],button{
+            width: 160px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type=submit],input[type=button],button:hover {
+            background-color: #45a049;
+        }
+        
+        .main {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            top: 100px;
+        }
+        
+        .square:hover {
+            transition: box-shadow .25s;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        .square {
+            width: 140px;
+            height: 320px; 
+            padding: 10px;
+            position: relative;
+            margin: 10px;
+            float: left;
+            border: 1px solid;
+            font-family: arial;
+            align: center;
+            background: radial-gradient(ellipse at top, rgba(153, 204, 205, .4) 0, rgba(255, 255, 255, .18) 54%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
+        }
+    }
+    #all {
+        width: 100%;
+        float: left;
+        text-align: center;
+    }
+    .inventory {
+        left: 5%;
+        width: 1130px;
+        top: 50px;
+        height: 100%;
+        margin: 0 auto;
+        border: 1px solid;
+        box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
+    }
+    .aboveInventory {
+        z-index: 99;
+        left: 5%;
+        width: 90%;
+        top: 50px;
+        position: absolute;
+        height: 100px margin: 0 auto;
+    }
+    .topNav {
+        height: 100px;
+        width: 100%;
+        background-color: darkgreen;
+        position: relative;
+        top: 10px;
+        font-size: 30px;
+        font-family: arial;
+        color: white;
+        display: table;
+    }
+    .topNavCenter {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+    p.center {
+        vertical-align: middle;
+        top: 10%;
+        color: black;
+        text-align: center;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    progress {
+        width: 80px;
+    }
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        
+        position: absolute;
+        /* Stay in place */
+        
+        z-index: 1;
+        /* Sit on top */
+        
+        top: 40%;
+        margin: 0 auto;
+        width: 800px;
+        /* Full width */
+        
+        height: 200px;
+        /* Full height */
+        
+        overflow: auto;
+        /* Enable scroll if needed */
+        
+        background-color: rgb(255, 255, 255, .5);
+        /* Fallback color */
+        
+        background-color: rgb(255, 255, 255, .5);
+        /* Black w/ opacity */
+    }
+    </style>
+
+
+</head>
+
+
+<body>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+    <nav>
+        <div class="nav-wrapper  indigo lighten-2" style=" z-index:99;">
+            <a href="#" class="brand-logo center">PokeyPy Manager</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="http://localhost:5100/">Dashboard</a></li>
+                
+                <li><a href="http://localhost:5100/inventory">PokeManager</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="aboveInventory" id="aboveInventory">
+        <br>
+        <Center>
+            <form action="http://localhost:5100/release">
+                <font face=arial size=3>Sort By:&nbsp;</font>
+                <select id="sortBy" onchange="sortPokes()" readonly=true style="text-align:center;width:200px;"> 
+			<option value="cp">Pokemon CP</option>
+			<option value="pokemon_name">Pokemon Name</option>
+			<option value="pokemon_id">Pokemon ID</option>
+			<option value="iv">Pokemon IV</option>
+			</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected" name="action"> <input type=submit value="Evolve Selected" name="action"> <input type=submit value="Rename Selected" name="action"> <input type="button" id="advFilter" onclick="document.getElementById('advFilterModal').style.display = 'block'" value="Advanced Filter"> <input type="button" id="selectAll" onclick="selectAllPokes()" value="Select All"></form>
+
+
+        </center>
+        <br>
+    </div>
+
+    <div class="inventory" id="inventory">
+        <br><br><br><br><br>
+    </div>
+
+
+    <div id="advFilterModal" class="modal">
+        <font style="margin-left:20px;" face=arial>CP Threshold <input value=0 style="margin-top:20px;margin-left:10px;width:100px;" id="cpThreshold">
+
+            <font style="margin-left:20px;" face=arial>IV Threshold (%)<input value=0 style="margin-top:20px;margin-left:10px;width:100px;" id="ivThreshold">
+
+                <font style="margin-left:20px;" face=arial>Pokemon Name <input style="margin-top:20px;margin-left:10px;width:100px;" id="pokemonName">
+                    <br>
+                    <center><button id="filter" type="button" onclick="sortPokes()">Filter Pokemon</button></center>
+    </div>
+
+
+    <script type="text/javascript">
+        <!--
+        var party = []
+
+        var selectedPokes = []
+
+
+        function loadJSON(path, success, error) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        if (success)
+                            success(JSON.parse(xhr.responseText));
+                    } else {
+                        if (error)
+                            error(xhr);
+                    }
+                }
+            };
+            xhr.open("GET", path, true);
+            xhr.send();
+        }
+
+        function sortByKey(array, key) {
+            if (key == 'cp' || key == 'iv') {
+                return array.sort(function(b, a) {
+                    var x = a[key];
+                    var y = b[key];
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                });
+            } else {
+                return array.sort(function(a, b) {
+                    var x = a[key];
+                    var y = b[key];
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                });
+            }
+        }
+
+        function selectPoke(id) {
+            if (selectedPokes.indexOf(id.parentElement.id) == -1) {
+                selectedPokes.push(id.parentElement.id);
+                id.parentElement.style.background = 'radial-gradient(ellipse at top,rgba(255,51,51,1) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
+
+            } else {
+                selectedPokes.splice(selectedPokes.indexOf(id.parentElement.id), 1);
+                id.parentElement.style.background = 'radial-gradient(ellipse at top, rgba(153,204,205, .4) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
+            }
+
+
+
+
+            for (var id in selectedPokes) {
+                //debug
+            }
+
+
+            //push selected pokemon to hidden text field for transmittal to python script
+            document.getElementById("pokeID").value = selectedPokes;
+
+
+
+        }
+
+        function sculpt(data) {
+
+            party = data;
+            //default sort is by CP
+
+            sortPokes();
+        }
+
+
+
+        //sort pokemon by id,pokemon_id,cp,stamina,stamina_max,move_1,move_2,etc.
+        function sortPokes() {
+			var squareCount = 0;
+            document.getElementById('advFilterModal').style.display = "none";
+            key = document.getElementById('sortBy').value;
+
+
+            document.getElementById('inventory').innerHTML = origInventory;
+            sortByKey(party, key);
+
+            /*	SAMPLE POKEMON INFO FOR FORMATTING HELP
+			
+                #id: 2436312686824190668
+                #pokemon_id: EEVEE
+                #cp: 46
+                #stamina: 19
+                #stamina_max: 19
+                #move_1: TACKLE_FAST
+                #move_2: DIG
+                #height_m: 0.297532558441
+                #weight_kg: 8.24643802643
+                #individual_attack: 15
+                #individual_defense: 12
+                #individual_stamina: 9
+                #cp_multiplier: 0.166397869587
+                #pokeball: ITEM_POKE_BALL
+                #captured_cell_id: 6108423709528162304
+                #creation_time_ms: 1469364470778
+            	*/
+
+
+            for (var i in party) {
+                party[i].iv = (party[i].individual_attack + party[i].individual_defense + party[i].individual_stamina) / 45;
+
+
+                var content = document.createElement('div');
+                content.className = 'square hoverable';
+                content.id = party[i].id;
+                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img class="pokeSquare" style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png>\
+	<font size=2 face=arial><center>' + party[i].pokemon_name + '<br>Candies: ' + party[i].candies + '/' + party[i].reqCandies + '</font><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress><br><font size=3 face=arial><b>IV: '+ Math.round(party[i].iv * 100) + '%</b></center>\
+	<br>'
+
+                if (document.getElementById('pokemonName').value != '') {
+
+                    if (document.getElementById('pokemonName').value.toUpperCase() == party[i].pokemon_name.toUpperCase()) {
+
+                        if (document.getElementById('ivThreshold').value != '') {
+                            if (party[i].iv * 100 >= parseInt(document.getElementById('ivThreshold').value) && party[i].cp >= parseInt(document.getElementById('cpThreshold').value))
+                                document.getElementById('inventory').appendChild(content);
+								squareCount = squareCount + 1;
+                        } else {
+                            document.getElementById('inventory').appendChild(content);
+							squareCount = squareCount + 1;
+                        }
+                    }
+                } else {
+
+                    if (document.getElementById('ivThreshold').value != '') {
+                        if (party[i].iv * 100 >= parseInt(document.getElementById('ivThreshold').value) && party[i].cp >= parseInt(document.getElementById('cpThreshold').value))
+                            document.getElementById('inventory').appendChild(content);
+							squareCount = squareCount + 1;
+                    } else {
+                        document.getElementById('inventory').appendChild(content);
+						squareCount = squareCount + 1;
+                    }
+
+                }
+            }
+			if (squareCount / 7 < .5) {
+			squareCount = (7 - squareCount) + squareCount ;
+			if(squareCount == 7) {document.getElementById('inventory').style.height = ((squareCount / 7) * 355) +100}
+			else {document.getElementById('inventory').style.height = ((squareCount / 7) * 355) ;}
+			} else if(squareCount == 7) {document.getElementById('inventory').style.height = ((squareCount / 7) * 355) +100}
+			
+			
+			else {document.getElementById('inventory').style.height = ((squareCount / 7) * 355) ;}
+            
+
+
+
+            document.getElementById('pokemonName').value = "";
+            document.getElementById('ivThreshold').value = 0;
+            document.getElementById('cpThreshold').value = 0;
+			
+
+        }
+
+        var origInventory = document.getElementById('inventory').innerHTML;
+        var url = "/static/inventory.json?" + new Date().getTime();
+        loadJSON(url,
+            function(data) {
+                sculpt(data);
+            },
+            function(xhr) {
+                console.error(xhr);
+            }
+        );
+		function selectAllPokes() {
+					var pokePokes = document.getElementsByClassName("pokeSquare");
+			for(var i = 0; i < pokePokes.length; i++)
+{
+				pokePokes.item(i).click();
+}
+
+}
+        //let's clear some stuff
+        document.getElementById('pokemonName').value = "";
+        document.getElementById('ivThreshold').value = 0;
+        document.getElementById('cpThreshold').value = 0;
+    </script>
+
+</body>
+
+</html>
