@@ -250,7 +250,7 @@ if __name__ == '__main__':
     
     
     # Check service
-    minCP = int(config.get('CONFIG','minCP'))
+    
     if config.get('AUTH','type') not in ['ptc', 'google']:
         logging.error('Invalid auth service {}'.format(config.get('AUTH','type')))
         sys.exit(-1)
