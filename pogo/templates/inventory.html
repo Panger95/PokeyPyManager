@@ -203,7 +203,7 @@ progress[role] strong {
 <body>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
 
 
     <nav>
@@ -221,9 +221,9 @@ progress[role] strong {
     <div class="aboveInventory" id="aboveInventory">
         <br>
         <Center>
-            <form action="/release">
+            <form action="/release" id="topForm">
                 <font face=arial size=3>Sort By:&nbsp;</font>
-                <select id="sortBy" onchange="sortPokes()" readonly=true style="text-align:center;width:150px;"> 
+                <select form="topForm" id="sortBy" name="sortBy" onchange="sortPokes()" style="text-align:center;width:150px;"> 
 			<option value="cp">Pokemon CP</option>
 			<option value="pokemon_name">Pokemon Name</option>
 			<option value="pokemon_id">Pokemon ID</option>
@@ -248,7 +248,7 @@ progress[role] strong {
 
                 <font style="margin-left:20px;" face=arial>Pokemon Name <input style="margin-top:20px;margin-left:10px;width:100px;" id="pokemonName">
                     <br>
-                    <center><button id="filter" type="button" onclick="sortPokes()">Filter Pokemon</button></center>
+                    <center><button id="filter" type="button" onclick="sortPokes()">Filter Pokemon</button> <button id="closeModal" type="button" onclick="document.getElementById('advFilterModal').style='display:none;'">Cancel</button></center>
     </div>
 
 
@@ -333,8 +333,14 @@ progress[role] strong {
             var squareCount = 0;
             document.getElementById('advFilterModal').style.display = "none";
             key = document.getElementById('sortBy').value;
-
-
+			var d = new Date();
+			var curTime = d.getTime()/1000; 
+			
+			if (parseInt(curTime) - parseInt(party[0].timeStamp) < 120){
+			key = party[0].sortBy;
+			document.getElementById('sortBy').value = key;
+			} else {}
+			
             document.getElementById('inventory').innerHTML = origInventory;
             sortByKey(party, key);
 
