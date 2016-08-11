@@ -1,4 +1,4 @@
-<font color=red size=4>***LATEST COMMIT REQUIRES YOU TO RUN PIP INSTALL -R REQUIREMENTS.TXT AGAIN :)***
+<font color=red size=4>***LATEST COMMIT REQUIRES YOU TO RUN PIP INSTALL -R REQUIREMENTS.TXT AGAIN :)***</font>
 
 
 PokeyPy Manager
