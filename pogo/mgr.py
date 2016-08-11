@@ -35,6 +35,8 @@ app = Flask(__name__)
 
 @app.route('/release')
 def release():
+    global released
+    global sortBy
     inventory = session.getInventory()
     
     #id: 2436312686824190668
@@ -55,7 +57,7 @@ def release():
     #creation_time_ms: 1469364470778
     pokeID = request.args.get('pokeID', 0)
     action = request.args.get('action',0)
-    
+    sortBy = request.args.get('sortBy',0)
     
     
     
@@ -102,11 +104,14 @@ def release():
                         logging.critical("Rate limiting in effect, waiting before next action.")
                         time.sleep(int(config.get('CONFIG','evolveDelay')) + random.randint(1, 5))
                     #logging.critical(inventory.party)
+                    
+    released = True                
     return render_template('inventoryTimeout.html')
     
 
 @app.route('/inventory')
 def inventory():
+    global released
     inventory = session.getInventory()
     pokes = []
     #id: 2436312686824190668
@@ -137,6 +142,12 @@ def inventory():
         curPoke = inventory.party[poke]   
         candies = 0
         nickName = None
+        if released == True:
+            timeStamp = int(round(time.time()))
+            released = False
+        else:
+            timeStamp = 0
+            
         if curPoke.nickname:
             nickName = curPoke.nickname
         else:
@@ -155,7 +166,7 @@ def inventory():
             #logging.critical(str(curPoke.pokemon_id) + " is a family!")
             candies = inventory.candies[curPoke.pokemon_id]
             candyFamily = pokedex[curPoke.pokemon_id]
-            
+        
         pokez = {
         'id': str(curPoke.id),
         'pokemon_id': curPoke.pokemon_id,
@@ -176,7 +187,9 @@ def inventory():
         'individual_stamina': curPoke.individual_stamina,
         'candies': candies,
         'reqCandies': reqCandy[str(curPoke.pokemon_id)],
-        'candyFamily': candyFamily
+        'candyFamily': candyFamily,
+        'sortBy': sortBy,
+        'timeStamp': timeStamp
         }
         pokes.append(pokez)
         
@@ -266,13 +279,12 @@ def getInventory(session):
 def hb():
    hb = session.getMapObjects()
     
-    
-    
-    
-    
-    
 
 if __name__ == '__main__':
+    global sortBy
+    sortBy = 'cp'
+    global released
+    released = False
     data = [{'status':'Server startup. Nothing to report.'}]
     json.dump(data, open('static/catch_data.json', 'w'))
     time.sleep(1)
