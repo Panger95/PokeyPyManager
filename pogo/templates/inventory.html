@@ -348,7 +348,10 @@ progress[role] strong {
 
         //sort pokemon by id,pokemon_id,cp,stamina,stamina_max,move_1,move_2,etc.
         function sortPokes() {
-            var squareCount = 0;
+			
+			selectedPokes = [];
+			document.getElementById("pokeID").value = selectedPokes;
+			var squareCount = 0;
             document.getElementById('advFilterModal').style.display = "none";
             key = document.getElementById('sortBy').value;
 			var d = new Date();
