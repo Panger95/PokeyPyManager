@@ -210,9 +210,9 @@ progress[role] strong {
         <div class="nav-wrapper  indigo lighten-2" style=" z-index:99;">
             <a href="#" class="brand-logo center">PokeyPy Manager</a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="http://localhost:5100/">Dashboard</a></li>
+                <li><a href="/">Dashboard</a></li>
 
-                <li><a href="http://localhost:5100/inventory">PokeManager</a></li>
+                <li><a href="/inventory">PokeManager</a></li>
 
             </ul>
         </div>
@@ -221,7 +221,7 @@ progress[role] strong {
     <div class="aboveInventory" id="aboveInventory">
         <br>
         <Center>
-            <form action="http://localhost:5100/release">
+            <form action="/release">
                 <font face=arial size=3>Sort By:&nbsp;</font>
                 <select id="sortBy" onchange="sortPokes()" readonly=true style="text-align:center;width:150px;"> 
 			<option value="cp">Pokemon CP</option>
