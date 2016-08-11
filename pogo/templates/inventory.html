@@ -339,7 +339,7 @@ progress[role] strong {
         function sculpt(data) {
 
             party = data;
-            //default sort is by CP
+            
 
             sortPokes();
         }
@@ -350,7 +350,7 @@ progress[role] strong {
         function sortPokes() {
 			
 			selectedPokes = [];
-			document.getElementById("pokeID").value = selectedPokes;
+			document.getElementById("pokeID").value = selectedPokes; 
 			var squareCount = 0;
             document.getElementById('advFilterModal').style.display = "none";
             key = document.getElementById('sortBy').value;
