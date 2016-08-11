@@ -73,8 +73,8 @@
         .pokeSquare {}
         
         .square {
-            width: 200px;
-            height: 320px;
+            width: 230px;
+            height: 330px;
             padding: 10px;
             position: relative;
             margin: 10px;
@@ -93,7 +93,7 @@
     }
     .inventory {
         left: 5%;
-        width: 1110px;
+        width: 1260px;
         top: 50px;
         height: 100%;
         margin: 0 auto;
@@ -372,8 +372,8 @@ progress[role] strong {
                 } else {
                     var candyString = party[i].candies + '/' + party[i].reqCandies + ' ' + ucFirst(party[i].candyFamily) + ' Candies';;
                 }
-                content.innerHTML = '<font face=arial size=4 color=navy> <center>' + party[i].cp + ' CP | ' + Math.round(party[i].iv * 100) + '% IV</center></b></font><center><img class="pokeSquare" style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png></center>\
-	<font size=3 face=arial><center>' + ucFirst(party[i].pokemon_name) + '</font><br><progress style="height:10px;width:80%;" value=' + party[i].stamina +' max=' + party[i].stamina_max +'></progress><br><font size=2>HP ' + party[i].stamina + '/' + party[i].stamina_max + '<br><font face=arial size=1>' + candyString + '</font><br></center>\
+                content.innerHTML = '<font face=arial size=4 color=navy> <center>' + party[i].cp + ' CP | ' + Math.round(party[i].iv * 100) + '% IV</b></font><br><font face=arial style="font-size:11px;"><b>Atk: </b>' + party[i].individual_attack + '<b>&nbsp;&nbsp;&nbsp;Def: </b>' + party[i].individual_defense + '<b>&nbsp;&nbsp;&nbsp;Sta: </b>' + party[i].individual_stamina + '</font></center><center><img class="pokeSquare" style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png></center>\
+	<font size=4 face=arial><center>' + ucFirst(party[i].pokemon_name) + '</font><br><progress style="height:10px;width:80%;" value=' + party[i].stamina +' max=' + party[i].stamina_max +'></progress><br><font size=2>HP ' + party[i].stamina + '/' + party[i].stamina_max + '<br><br>Move 1<br>Move 2<br><br><b><font face=arial size=2>' + candyString + '</font><br></center></b>\
 	<br>'
 
                 if (document.getElementById('pokemonName').value != '') {
@@ -407,14 +407,14 @@ progress[role] strong {
                 squareCount = (5 - (squareCount % 5)) + squareCount;
 
                 if (squareCount == 5) {
-                    document.getElementById('inventory').style.height = ((squareCount / 5) * 345) + 120
+                    document.getElementById('inventory').style.height = ((squareCount / 5) * 355) + 130
                 } else {
-                    document.getElementById('inventory').style.height = ((squareCount / 5) * 345);
+                    document.getElementById('inventory').style.height = ((squareCount / 5) * 355);
                 }
             } else if (squareCount == 5) {
-                document.getElementById('inventory').style.height = ((squareCount / 5) * 345) + 120
+                document.getElementById('inventory').style.height = ((squareCount / 5) * 355) + 130
             } else {
-                document.getElementById('inventory').style.height = ((squareCount / 5) * 345);
+                document.getElementById('inventory').style.height = ((squareCount / 5) * 355);
             }
 
 
