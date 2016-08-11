@@ -4,6 +4,8 @@ PokeyPy Manager
 PokeyPy Manager is a tool which allows you to manage your Pokemon in Pokemon Go. It utilizes https://github.com/rubenvereecken/pokemongo-api to gather information and to perform management actions
 such as releasing/evolving/renaming Pokemon.
 
+<b>DISCLAIMER: Since this interacts with the PoGo servers to fetch data / perform evovlves/releases/renames, it is possible to be banned. If you are not comfortable with this possibility, please do not use this tool</b>
+
 Features
 --------
 
@@ -37,7 +39,8 @@ Troubleshooting
 --------------
 
 
-Thanks to https://github.com/rubenvereecken/pokemongo-api for providing the API used by PokeyPySnipe, and to all the developers who worked on the Unknown6 solution - PokeyPySnipe uses the encrypt dll/so files from http://pgoapi.com.
+Thanks to https://github.com/rubenvereecken/pokemongo-api for providing the API used by PokeyPy Manager, and to all the developers who worked on the Unknown6 solution - PokeyPy Manager uses the encrypt dll/so files from http://pgoapi.com.
+
 
 Here's a screenshot of it in action:
 
