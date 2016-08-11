@@ -36,6 +36,9 @@ Troubleshooting
 
 --------------
 
-<img src="http://i.imgur.com/rL1yd5D.png">
 
 Thanks to https://github.com/rubenvereecken/pokemongo-api for providing the API used by PokeyPySnipe, and to all the developers who worked on the Unknown6 solution - PokeyPySnipe uses the encrypt dll/so files from http://pgoapi.com.
+
+Here's a screenshot of it in action:
+
+<img src="http://i.imgur.com/rL1yd5D.png">
