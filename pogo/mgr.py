@@ -78,12 +78,16 @@ def release():
                 #logging.critical(iv*100)
                 #logging.critical(int(iv*100))
                 
+                
                 if action.find("Release") > -1:
-                    logging.critical("Found pokemon. Transfer in progress...")
-                    logging.critical(session.releasePokemon(inventory.party[poke]))
-                    if len(pokeID.split(","))>1:
-                        logging.critical("Rate limiting in effect, waiting before next action.")
-                        time.sleep(int(config.get('CONFIG','releaseDelay')) + random.randint(1, 5))
+                    if inventory.party[poke].favorite:
+                        logging.critical("Found Pokemon, skipping transfer - it's favorited!")
+                    else:
+                        logging.critical("Found pokemon. Transfer in progress...")
+                        logging.critical(session.releasePokemon(inventory.party[poke]))
+                        if len(pokeID.split(","))>1:
+                            logging.critical("Rate limiting in effect, waiting before next action.")
+                            time.sleep(int(config.get('CONFIG','releaseDelay')) + random.randint(1, 5))
                 elif action.find("Evolve") > -1:
                     logging.critical("Found pokemon. Evolve in progress...")
                     logging.critical(session.evolvePokemon(inventory.party[poke]))
@@ -104,6 +108,18 @@ def release():
                         logging.critical("Rate limiting in effect, waiting before next action.")
                         time.sleep(int(config.get('CONFIG','evolveDelay')) + random.randint(1, 5))
                     #logging.critical(inventory.party)
+                elif action.find("Favorite") > -1:
+                    logging.critical("Found pokemon. Toggling favorite.")
+                    if inventory.party[poke].favorite:
+                        logging.critical(session.setFavoritePokemon(inventory.party[poke],False))
+                    else:
+                        logging.critical(session.setFavoritePokemon(inventory.party[poke],True))
+                    if len(pokeID.split(","))>1:
+                        logging.critical("Rate limiting in effect, waiting before next action.")
+                        time.sleep(random.randint(1, 2))
+                    #logging.critical(inventory.party)
+                
+                
                     
     released = True                
     return render_template('inventoryTimeout.html')
@@ -152,7 +168,12 @@ def inventory():
             nickName = curPoke.nickname
         else:
             nickName = pokedex[curPoke.pokemon_id]
-            
+        
+        if curPoke.favorite:
+            favorite='star_gold.png'
+        else:
+            favorite = 'star_grey.png'
+        
         if str(curPoke.pokemon_id) not in family:
             
             for z in family:
@@ -189,7 +210,9 @@ def inventory():
         'reqCandies': reqCandy[str(curPoke.pokemon_id)],
         'candyFamily': candyFamily,
         'sortBy': sortBy,
-        'timeStamp': timeStamp
+        'timeStamp': timeStamp,
+        'creation_time_ms': curPoke.creation_time_ms / 1000,
+        'favorite': favorite
         }
         pokes.append(pokez)
         
@@ -198,7 +221,8 @@ def inventory():
     
     
     json.dump(pokes, open('static/inventory.json', 'w'))
-    
+    #logging.critical(inventory)
+    #logging.critical(inventory)
     return render_template('inventory.html')
     
 @app.route('/')
@@ -341,7 +365,7 @@ if __name__ == '__main__':
     atexit.register(lambda: scheduler.shutdown())
 
     
-    app.run(host='0.0.0.0', port=5100)
+    app.run(host='0.0.0.0', port=5100,debug=False)
     url_for('static', filename='catch_data.json')
     
     	
