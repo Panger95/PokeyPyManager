@@ -83,4 +83,4 @@ Thanks to https://github.com/rubenvereecken/pokemongo-api for providing the API 
 
 Here's a screenshot of it in action:
 
-<img src="http://i.imgur.com/rL1yd5D.png">
+<img src="http://i.imgur.com/p6jGMVH.png">
