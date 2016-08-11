@@ -25,7 +25,7 @@ Requirements
 
 Instructions
 ------------
-
+- Install Python 2.7 from the link above
 - Open Command Prompt/Terminal/equivalent
 - Navigate to the root of the PokeyPySnipe directory
 - Run ```pip install -r requirements.txt```
