@@ -32,7 +32,43 @@ Instructions
 - Navigate to the ```pogo``` directory
 - Duplicate ```config.ini.example``` and rename it to ```config.ini```, edit it with your options
 - Run ```python mgr.py```
-- Open http://127.0.0.1:5100 in your browser
+- Open http://127.0.0.1:5100 in your browser  
+
+Building and running with Docker
+------------
+Build the image using `docker build` from the main directory. It will spit out something like: 
+
+```
+Sending build context to Docker daemon 15.89 MB
+Step 1 : FROM jfloff/alpine-python:2.7-onbuild
+# Executing 2 build triggers...
+Step 1 : COPY ./requirements.txt /tmp/requirements.txt
+ ---> Using cache
+Step 1 : RUN pip install -r /tmp/requirements.txt
+ ---> Using cache
+ ---> 01b3cdd3921d
+Step 2 : ENV WORKING_DIR /usr/local/app
+ ---> Using cache
+ ---> a9f9bf8594f6
+Step 3 : EXPOSE 5100
+ ---> Using cache
+ ---> 7b8b9a9059d3
+Step 4 : COPY ./pogo $WORKING_DIR
+ ---> Using cache
+ ---> c63afc518007
+Step 5 : CMD /bin/bash -c "cp /usr/local/config/config.ini $WORKING_DIR && cd $WORKING_DIR && python mgr.py"
+ ---> Using cache
+ ---> f36749163edb
+Successfully built f36749163edb
+```            
+
+The hash at the end of the "successfully built" line is the docker image that was built. You can tag this to make it easier to use, or you can run with that hash.
+
+To run it, go to a directory where you have a config.ini file created. Then execute: 
+
+`docker run --rm -v $(PWD):/usr/local/config -p5100:5100 <hash of image you just built>`
+
+You can then go to http://localhost:5100 to view the PokeyPyManager
 
 Troubleshooting
 ---------------
