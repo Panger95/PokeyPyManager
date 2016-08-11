@@ -203,7 +203,7 @@ progress[role] strong {
 <body>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 
 
     <nav>
@@ -370,7 +370,8 @@ progress[role] strong {
                 if (party[i].reqCandies == 0) {
                     var candyString = party[i].candies + ' ' + ucFirst(party[i].candyFamily) + ' Candies';
                 } else {
-                    var candyString = party[i].candies + '/' + party[i].reqCandies + ' ' + ucFirst(party[i].candyFamily) + ' Candies';;
+					
+                    var candyString = party[i].candies + '/' + party[i].reqCandies + ' ' + ucFirst(party[i].candyFamily) + ' Candies';
                 }
                 content.innerHTML = '<font face=arial size=4 color=navy> <center>' + party[i].cp + ' CP | ' + Math.round(party[i].iv * 100) + '% IV</b></font><br><font face=arial style="font-size:11px;"><b>Atk: </b>' + party[i].individual_attack + '<b>&nbsp;&nbsp;&nbsp;Def: </b>' + party[i].individual_defense + '<b>&nbsp;&nbsp;&nbsp;Sta: </b>' + party[i].individual_stamina + '</font></center><center><img class="pokeSquare" style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png></center>\
 	<font size=4 face=arial><center>' + ucFirst(party[i].pokemon_name) + '</font><br><progress style="height:10px;width:80%;" value=' + party[i].stamina +' max=' + party[i].stamina_max +'></progress><br><font size=2>HP ' + party[i].stamina + '/' + party[i].stamina_max + '</center><b>' + party[i].move_1 + '</b><b  style="float:right;padding-right:10px;">' + party[i].move_1_dmg + '</b><br><i>' + party[i].move_1_type + '<br></i><b>' + party[i].move_2 + '</b><b  style="float:right;padding-right:10px;">' + party[i].move_2_dmg + '</b><br><i>' + party[i].move_2_type + '<br><br></i><b><center><img style="display:inline;position:relative;bottom:5px;" width=20 height=20 src=static/avatars/candy.png><font style="position:relative;bottom:10px;margin-bottom:15px;" color=navy face=arial size=2>' + candyString + '</font><br></center></b>\
@@ -407,14 +408,14 @@ progress[role] strong {
                 squareCount = (5 - (squareCount % 5)) + squareCount;
 
                 if (squareCount == 5) {
-                    document.getElementById('inventory').style.height = ((squareCount / 5) * 375) + 130
+                    document.getElementById('inventory').style.height = ((squareCount / 5) * 380) + 130
                 } else {
-                    document.getElementById('inventory').style.height = ((squareCount / 5) * 375);
+                    document.getElementById('inventory').style.height = ((squareCount / 5) * 380);
                 }
             } else if (squareCount == 5) {
-                document.getElementById('inventory').style.height = ((squareCount / 5) * 375) + 130
+                document.getElementById('inventory').style.height = ((squareCount / 5) * 380) + 130
             } else {
-                document.getElementById('inventory').style.height = ((squareCount / 5) * 375);
+                document.getElementById('inventory').style.height = ((squareCount / 5) * 380);
             }
 
 
