@@ -22,9 +22,15 @@ import thread
 import subprocess
 import os
 import sys
+import atexit
 
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 
 app = Flask(__name__)
+
+#this will execute the_task() every 30 seconds in the spooler
+
 
 
 @app.route('/release')
@@ -81,15 +87,21 @@ def release():
                     logging.critical(session.evolvePokemon(inventory.party[poke]))
                     if len(pokeID.split(","))>1:
                         logging.critical("Rate limiting in effect, waiting before next action.")
-                        time.sleep(int(config.get('CONFIG','releaseDelay')) + random.randint(1, 5))
+                        time.sleep(int(config.get('CONFIG','evolveDelay')) + random.randint(1, 5))
                 elif action.find("Rename") > -1:
                     logging.critical("Found pokemon. Renaming to " + str(pokedex[curPoke.pokemon_id]) + str(int(iv*100)))
                     logging.critical(session.nicknamePokemon(inventory.party[poke],str(pokedex[curPoke.pokemon_id]) + str(int(iv*100))))
                     if len(pokeID.split(","))>1:
                         logging.critical("Rate limiting in effect, waiting before next action.")
-                        time.sleep(int(config.get('CONFIG','releaseDelay')) + random.randint(1, 5))
+                        time.sleep(int(config.get('CONFIG','renameDelay')) + random.randint(1, 5))
                     #logging.critical(inventory.party)
-                
+                elif action.find("PowerUp") > -1:
+                    logging.critical("Found pokemon. Upgrading.")
+                    logging.critical(session.upgradePokemon(inventory.party[poke]))
+                    if len(pokeID.split(","))>1:
+                        logging.critical("Rate limiting in effect, waiting before next action.")
+                        time.sleep(int(config.get('CONFIG','evolveDelay')) + random.randint(1, 5))
+                    #logging.critical(inventory.party)
     return render_template('inventoryTimeout.html')
     
 
@@ -124,6 +136,12 @@ def inventory():
         
         curPoke = inventory.party[poke]   
         candies = 0
+        nickName = None
+        if curPoke.nickname:
+            nickName = curPoke.nickname
+        else:
+            nickName = pokedex[curPoke.pokemon_id]
+            
         if str(curPoke.pokemon_id) not in family:
             
             for z in family:
@@ -141,7 +159,7 @@ def inventory():
         pokez = {
         'id': str(curPoke.id),
         'pokemon_id': curPoke.pokemon_id,
-        'pokemon_name': pokedex[curPoke.pokemon_id],
+        'pokemon_name': nickName,
         'cp': curPoke.cp,
         'stamina': curPoke.stamina,
         'stamina_max': curPoke.stamina_max,
@@ -245,7 +263,14 @@ def getInventory(session):
     logging.info("Get Inventory:")
     logging.info(session.getInventory())
 
-
+def hb():
+   hb = session.getMapObjects()
+    
+    
+    
+    
+    
+    
 
 if __name__ == '__main__':
     data = [{'status':'Server startup. Nothing to report.'}]
@@ -288,11 +313,25 @@ if __name__ == '__main__':
     else:
         session = poko_session.authenticate()
 
-    # Time to show off what we can do
+    
     logging.info("Successfuly logged in to Pokemon Go! Starting web server on port 5100.")
-    logging.info(pokedex.getRarityById(pokedex.BULBASAUR))
-    app.run(host='0.0.0.0', port=5100, debug=True)
+    
+    ###Setting up HB:
+    scheduler = BackgroundScheduler()
+    scheduler.start()
+    scheduler.add_job(
+    func=hb,
+    trigger=IntervalTrigger(seconds=30),
+    id='printing_job',
+    name='Periodic call to getMapObjects to keep connection alive',
+    replace_existing=True)
+    # Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
+
+    
+    app.run(host='0.0.0.0', port=5100)
     url_for('static', filename='catch_data.json')
+    
     	
     
 	
