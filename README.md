@@ -12,10 +12,10 @@ such as releasing/evolving/renaming Pokemon.
 Features
 --------
 
-- View all your Pokemon, including their IVs and CP level
+- View all your Pokemon's stats(CP, IV, Moves, etc.)
 - Rename Pokemon to include IV in name
 - See stats for your trainer, including capture rate and distance walked
-- Batch release and evolve Pokemon
+- Batch release, rename, favorite, un-favorite and evolve Pokemon
 
 Requirements
 ------------
